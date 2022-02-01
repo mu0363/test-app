@@ -17,17 +17,10 @@ export type UpdateUserData = {
 };
 
 export type UserContextType = {
-  session: Session;
-  user: DatabaseUser;
-  signIn: () => Promise<{
-    session: Session | null;
-    user: User | null;
-    provider?: Provider;
-    url?: string | null;
-    error: Error | null;
-    data: Session | null;
-  }>;
-  signOut: () => void;
+  session: Session | null;
+  user: DatabaseUser | null;
+  // signIn: () => Promise<DatabaseUser>;
+  // signOut: () => void;
   updateUsername: (updateUserData: UpdateUserData) => void;
   updateAvatar: (event: ChangeEvent<HTMLInputElement>) => void;
 };

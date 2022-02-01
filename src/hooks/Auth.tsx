@@ -24,7 +24,7 @@ export const UserContext = createContext<UserContextType | undefined>(
 
 export const UserContextProvider = (props: Props) => {
   const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<DatabaseUser | User | null>(null);
+  const [user, setUser] = useState<DatabaseUser | null>(null);
 
   useEffect(() => {
     const getDatabaseUser = async () => {
@@ -105,8 +105,8 @@ export const UserContextProvider = (props: Props) => {
   const value = {
     session,
     user,
-    signIn: () => supabase.auth.signIn({ provider: "google" }),
-    signOut: () => supabase.auth.signOut(),
+    // signIn: () => supabase.auth.signIn({ provider: "google" }),
+    // signOut: () => supabase.auth.signOut(),
     updateUsername,
     updateAvatar,
   };
