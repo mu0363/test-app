@@ -12,17 +12,15 @@ import { nanoidStrings } from "@/constant";
 import type { DatabaseUser, UpdateUserData, UserContextType } from "@/types";
 import { supabase } from "@/utils/supabaseClient";
 
-const nanoid = customAlphabet(nanoidStrings, 20);
-
 type Props = {
   children: ReactNode;
 };
 
-export const UserContext = createContext<UserContextType | undefined>(
-  undefined
-);
+const nanoid = customAlphabet(nanoidStrings, 20);
 
-export const UserContextProvider = (props: Props) => {
+const authContext = createContext<UserContextType | undefined>(undefined);
+
+const useProviderAuth = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<DatabaseUser | null>(null);
 
@@ -102,7 +100,7 @@ export const UserContextProvider = (props: Props) => {
     }
   };
 
-  const value = {
+  return {
     session,
     user,
     // signIn: () => supabase.auth.signIn({ provider: "google" }),
@@ -110,16 +108,19 @@ export const UserContextProvider = (props: Props) => {
     updateUsername,
     updateAvatar,
   };
+};
 
+export const AuthProvider = (props: Props) => {
+  const auth = useProviderAuth();
   return (
-    <UserContext.Provider value={value}>{props.children}</UserContext.Provider>
+    <authContext.Provider value={auth}>{props.children}</authContext.Provider>
   );
 };
 
-// export const useUser = () => {
-//   const context = useContext(UserContext);
-//   if (context === undefined) {
-//     throw new Error(`useUser must be used within a UserContextProvider.`);
-//   }
-//   return context;
-// };
+export const useAuth = () => {
+  const context = useContext(authContext);
+  if (context === undefined) {
+    throw new Error(`useUser must be used within a UserContextProvider.`);
+  }
+  return context;
+};
