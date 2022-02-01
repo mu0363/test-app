@@ -1,19 +1,17 @@
 import type { NextPage } from "next";
 import { MouseEvent, useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { useAuth } from "@/hooks/useAuth";
+import { useUser } from "../hooks/Auth";
 
 const Home: NextPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAuth();
-
-  // console.log(user);
-
+  const { user } = useUser();
   // const handleSignIn = (e: MouseEvent<HTMLButtonElement>) => {
   //   e.preventDefault();
   //   setIsLoading(true);
   //   signIn();
   // };
+
+  console.log(user);
 
   return (
     <div className="text-center selection:text-yellow-500 selection:bg-yellow-300">
