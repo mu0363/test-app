@@ -49,14 +49,14 @@ export const useAuth = () => {
   //   };
   // }, [session, setUser]);
 
-  const updateUsername = async (data: UpdateUserData) => {
-    const { data: newUser } = await supabase
-      .from("users")
-      .update({ full_name: data.full_name, updated_at: new Date() })
-      .match({ id: data.id })
-      .single();
-    setUser(newUser);
-  };
+  // const updateUsername = async (data: UpdateUserData) => {
+  //   const { data: newUser } = await supabase
+  //     .from("users")
+  //     .update({ full_name: data.full_name, updated_at: new Date() })
+  //     .match({ id: data.id })
+  //     .single();
+  //   setUser(newUser);
+  // };
 
   // const updateAvatar = async (event: ChangeEvent<HTMLInputElement>) => {
   //   try {
