@@ -7,11 +7,10 @@ import { userState } from "@/stores";
 import type { UpdateUserData, DatabaseUser } from "@/types";
 import { supabase } from "@/utils/supabaseClient";
 
-const nanoid = customAlphabet(nanoidStrings, 20);
-
 export const useAuth = () => {
   const [user, setUser] = useState<DatabaseUser | null>();
   const [session, setSession] = useState<Session | null>(null);
+  const nanoid = customAlphabet(nanoidStrings, 20);
 
   useEffect(() => {
     const getDatabaseUser = async () => {
