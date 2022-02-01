@@ -3,6 +3,7 @@ import { customAlphabet } from "nanoid";
 import {
   ChangeEvent,
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useState,
@@ -13,11 +14,15 @@ import { supabase } from "@/utils/supabaseClient";
 
 const nanoid = customAlphabet(nanoidStrings, 20);
 
+type Props = {
+  children: ReactNode;
+};
+
 export const UserContext = createContext<UserContextType | undefined>(
   undefined
 );
 
-export const UserContextProvider = ({ children }) => {
+export const UserContextProvider = (props: Props) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<DatabaseUser | User | null>(null);
 
@@ -106,7 +111,9 @@ export const UserContextProvider = ({ children }) => {
     updateAvatar,
   };
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={value}>{props.children}</UserContext.Provider>
+  );
 };
 
 export const useUser = () => {
