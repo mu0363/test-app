@@ -4,12 +4,13 @@ import styles from "../styles/Home.module.css";
 import { useAuth } from "../hooks/auth";
 
 const Home: NextPage = () => {
-  const { user } = useAuth();
-  // const handleSignIn = (e: MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-  //   signIn();
-  // };
+  const [isLoading, setIsLoading] = useState(false);
+  const { user, signOut, signIn } = useAuth();
+  const handleSignIn = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    signIn();
+  };
 
   return (
     <div className="text-center selection:text-yellow-500 selection:bg-yellow-300">
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
         </h1>
         <p className="font-bold">{user?.full_name}</p>
       </div>
-      {/* <button
+      <button
         className="py-4 px-6 mx-auto mr-5 mb-10 text-white bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full hover:shadow-lg hover:shadow-blue-500/50 transition hover:scale-105"
         onClick={handleSignIn}
         disabled={isLoading}
@@ -27,7 +28,7 @@ const Home: NextPage = () => {
         <span>{isLoading ? "Loading" : "Sign in with Google"}</span>
       </button>
 
-      <button onClick={() => signOut()}>Sign out</button> */}
+      <button onClick={() => signOut()}>Sign out</button>
     </div>
   );
 };
