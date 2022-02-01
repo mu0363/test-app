@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/auth";
 
 const Home: NextPage = () => {
   const { user } = useAuth();
