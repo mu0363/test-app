@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  // const { user, signIn, signOut } = useAuth();
+  const { user } = useAuth();
 
   // console.log(user);
 
