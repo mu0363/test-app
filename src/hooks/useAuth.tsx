@@ -102,7 +102,7 @@ export const useAuth = () => {
     session,
     user,
     // signIn: () => supabase.auth.signIn({ provider: "google" }),
-    // signOut: () => supabase.auth.signOut(),
+    signOut: () => supabase.auth.signOut(),
     // updateUsername,
     // updateAvatar,
   };

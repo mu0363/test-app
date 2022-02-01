@@ -21,7 +21,7 @@ const Home: NextPage = () => {
         <h1 className="text-2xl font-bold underline decoration-yellow-500">
           Supabase + Next.js
         </h1>
-        {/* <p className="font-bold">{user?.full_name}</p> */}
+        <p className="font-bold">{user?.full_name}</p>
       </div>
       {/* <button
         className="py-4 px-6 mx-auto mr-5 mb-10 text-white bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full hover:shadow-lg hover:shadow-blue-500/50 transition hover:scale-105"
