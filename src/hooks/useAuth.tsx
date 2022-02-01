@@ -12,42 +12,42 @@ export const useAuth = () => {
   const [session, setSession] = useState<Session | null>(null);
   const nanoid = customAlphabet(nanoidStrings, 20);
 
-  useEffect(() => {
-    const getDatabaseUser = async () => {
-      const session = await supabase.auth.session();
-      setSession(session);
-      if (session?.user?.id) {
-        const { data: databaseUser } = await supabase
-          .from("users")
-          .select("*")
-          .eq("id", session.user.id)
-          .single();
-        setUser(databaseUser);
-      }
-    };
+  // useEffect(() => {
+  //   const getDatabaseUser = async () => {
+  //     const session = await supabase.auth.session();
+  //     setSession(session);
+  //     if (session?.user?.id) {
+  //       const { data: databaseUser } = await supabase
+  //         .from("users")
+  //         .select("*")
+  //         .eq("id", session.user.id)
+  //         .single();
+  //       setUser(databaseUser);
+  //     }
+  //   };
 
-    getDatabaseUser();
+  //   getDatabaseUser();
 
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        setSession(session);
-        if (session?.user?.id) {
-          const { data: databaseUser } = await supabase
-            .from("users")
-            .select("*")
-            .eq("id", session?.user.id)
-            .single();
-          setUser(databaseUser);
-        } else {
-          setUser(null);
-        }
-      }
-    );
+  //   const { data: authListener } = supabase.auth.onAuthStateChange(
+  //     async (_event, session) => {
+  //       setSession(session);
+  //       if (session?.user?.id) {
+  //         const { data: databaseUser } = await supabase
+  //           .from("users")
+  //           .select("*")
+  //           .eq("id", session?.user.id)
+  //           .single();
+  //         setUser(databaseUser);
+  //       } else {
+  //         setUser(null);
+  //       }
+  //     }
+  //   );
 
-    return () => {
-      authListener?.unsubscribe();
-    };
-  }, [session, setUser]);
+  //   return () => {
+  //     authListener?.unsubscribe();
+  //   };
+  // }, [session, setUser]);
 
   const updateUsername = async (data: UpdateUserData) => {
     const { data: newUser } = await supabase
