@@ -12,6 +12,10 @@ export const useAuth = () => {
   const [session, setSession] = useState<Session | null>(null);
   const nanoid = customAlphabet(nanoidStrings, 20);
 
+  useEffect(() => {
+    console.log("test");
+  }, []);
+
   // useEffect(() => {
   //   const getDatabaseUser = async () => {
   //     const session = await supabase.auth.session();
