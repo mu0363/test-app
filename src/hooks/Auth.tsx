@@ -17,7 +17,7 @@ export const UserContext = createContext<UserContextType | undefined>(
   undefined
 );
 
-export const UserContextProvider = (props: any) => {
+export const UserContextProvider = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<DatabaseUser | User | null>(null);
 
@@ -58,7 +58,7 @@ export const UserContextProvider = (props: any) => {
     };
   }, [session]);
 
-  const updateFullName = async (data: UpdateUserData) => {
+  const updateUsername = async (data: UpdateUserData) => {
     const { data: newUser } = await supabase
       .from("users")
       .update({ full_name: data.full_name })
@@ -102,11 +102,11 @@ export const UserContextProvider = (props: any) => {
     user,
     signIn: () => supabase.auth.signIn({ provider: "google" }),
     signOut: () => supabase.auth.signOut(),
-    updateFullName,
+    updateUsername,
     updateAvatar,
   };
 
-  return <UserContext.Provider value={value} {...props} />;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => {
