@@ -15,15 +15,15 @@ export const useAuth = () => {
   useEffect(() => {
     const getDatabaseUser = async () => {
       const session = await supabase.auth.session();
-      setSession(session);
-      if (session?.user?.id) {
-        const { data: databaseUser } = await supabase
-          .from("users")
-          .select("*")
-          .eq("id", session.user.id)
-          .single();
-        // setUser(databaseUser);
-      }
+      // setSession(session);
+      // if (session?.user?.id) {
+      //   const { data: databaseUser } = await supabase
+      //     .from("users")
+      //     .select("*")
+      //     .eq("id", session.user.id)
+      //     .single();
+      //   setUser(databaseUser);
+      // }
     };
     getDatabaseUser();
   }, []);
