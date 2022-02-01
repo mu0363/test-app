@@ -12,6 +12,9 @@ import {
 import { nanoidStrings } from "@/constant";
 import type { DatabaseUser, UpdateUserData, UserContextType } from "@/types";
 import { supabase } from "@/utils/supabaseClient";
+import { customAlphabet } from "nanoid";
+
+const nanoid = customAlphabet(nanoidStrings, 20);
 
 const userState = atom<DatabaseUser | null>({
   key: "user",
@@ -59,5 +62,61 @@ export const useAuth = () => {
     };
   }, [session, setUser]);
 
-  return { user };
+  const updateUsername = async (data: UpdateUserData) => {
+    const { data: newUser } = await supabase
+      .from("users")
+      .update({ full_name: data.full_name, updated_at: new Date() })
+      .match({ id: data.id })
+      .single();
+    setUser(newUser);
+  };
+
+  const updateAvatar = async (event: ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (!event.target.files || event.target.files.length === 0) {
+        throw new Error("You must select an image to upload.");
+      }
+      if (user) {
+        const previousAvatarUrl = user?.avatar_url;
+        const previousAvatarFileName = (previousAvatarUrl.match(
+          ".+/(.+?)([?#;].*)?$"
+        ) ?? "")[1];
+
+        // storage に画像をアップロード
+        const file = event.target.files[0];
+        const fileExt = file.name.split(".").pop();
+        const nanoFileName = nanoid();
+        const fileName = `${nanoFileName}.${fileExt}`;
+
+        await supabase.storage
+          .from("avatars")
+          .upload(`private/${fileName}`, file);
+
+        const url = await supabase.storage
+          .from("avatars")
+          .getPublicUrl(`private/${fileName}`).publicURL;
+        const { data: newUser } = await supabase
+          .from("users")
+          .update({ avatar_url: url, updated_at: new Date() })
+          .match({ id: user?.id })
+          .single();
+        setUser(newUser);
+
+        await supabase.storage
+          .from("avatars")
+          .remove([`private/${previousAvatarFileName}`]);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  return {
+    session,
+    user,
+    signIn: () => supabase.auth.signIn({ provider: "google" }),
+    signOut: () => supabase.auth.signOut(),
+    updateUsername,
+    updateAvatar,
+  };
 };
