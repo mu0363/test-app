@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { UserContext, useUser } from "../hooks/Auth";
+import { UserContext } from "../hooks/Auth";
 
 const Home: NextPage = () => {
   const context = useContext(UserContext);
