@@ -120,7 +120,7 @@ export const AuthProvider = (props: Props) => {
 export const useAuth = () => {
   const context = useContext(authContext);
   if (context === undefined) {
-    throw new Error(`useUser must be used within a UserContextProvider.`);
+    throw new Error(`useUser must be used within a AuthProvider.`);
   }
   return context;
 };
